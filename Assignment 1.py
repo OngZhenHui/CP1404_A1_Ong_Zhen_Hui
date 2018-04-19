@@ -9,7 +9,7 @@ Completed songs cannot be changed from learned to required.
 """
 
 
-#listing songs
+#list songs
 def list_song(songlist):
     i = 1
     not_learned = 0
@@ -18,7 +18,7 @@ def list_song(songlist):
     #loop through the list
     for row in songlist:
         #check and count number of songs learned (n) and not learned(y)
-        #unlearned songs are marked with "*"
+        #mark unlearned songs with "*"
         if row[3] == "n":
             learned = learned + 1
             mark = " "
@@ -26,22 +26,24 @@ def list_song(songlist):
             not_learned = not_learned + 1
             mark = "*"
 
-        #format the list of items with equal gaps
+        #format and print the list of items with equal gaps
         print("{}. {} {:35}- {:30}({})".format(i, mark, row[0], row[1], row[2]))
         i = i + 1
     print("\n{} songs learned, {} songs still to learn".format(learned, not_learned))
 
 
-#adding song in list
+#create function to add song in list
 def add_song(songlist):
-    #get song title
+    #get song title from user
     title = input("Title: ").title()
+    #error check that title is not blank
     while title == "":
         print("Input cannot be blank\nPlease enter a title")
         title = input("Title: ").title()
 
     #get song artist
     artist = input("Artist: ").title()
+    #error check that title is not blank
     while artist == "":
         print("Input cannot be blank\nPlease enter an artist name")
         artist = input("Artist: ").title()
@@ -51,7 +53,7 @@ def add_song(songlist):
     while check == 0:
         try:
             year = int(input("Year (YYYY): "))
-            #Error checking, ensure year is not < 0
+            #Error checking, ensure year is not too low or over current year
             if year <= 1500 or year >2018:
                 print("Year must be between 1500 and current year (2018)")
             #if no error, create new song as a list
@@ -61,12 +63,13 @@ def add_song(songlist):
                 songlist.append(new_song)
                 return sorted(songlist, key = lambda element: (element[1], element[0]))
 
+        #Error check for value error
         except ValueError:
             print("Invalid input!\nPlease enter a valid number")
     #add the new song into the song list
 
 
-#completing songs
+#create function for completing songs
 def complete_song(songlist):
     not_learned = 0
     learned = 0
@@ -76,32 +79,33 @@ def complete_song(songlist):
             learned = learned + 1
         else:
             not_learned = not_learned + 1
-    #if there are no more unlearned songs, stop the function and return to main()
+    #if there are no more unlearned songs, stop the function and return
     if not_learned == 0:
         print("No more songs to learn!")
         return sorted(songlist, key = lambda element: (element[1], element[0]))
 
     print("Enter the number of a song to mark as learned")
-    #the -1 is so that the it'll access the correct list as count starts from 0
 
     check = 0
     while check == 0:
         try:
             number = int(input(">>>")) - 1
-            #ensure that the number song is not over or below songlist
+            #Error check that number song is not over or below songlist
             if number < 0 or number > len(songlist) - 1:
                 print("Invalid song number")
 
+            #Error check to see if song was already completed
             elif songlist[number][3] == "n":
                 print("You have already learned {}".format(songlist[number][0]))
                 return songlist
 
+            #Change song from unlearned to complete
             else:
                 songlist[number][3] = "n"
                 print("{} by {} learned".format(songlist[number][0], songlist[number][1]))
 
                 return sorted(songlist, key=lambda element: (element[1], element[0]))
-
+        #Error check for value error
         except ValueError:
             print("Invalid input")
 

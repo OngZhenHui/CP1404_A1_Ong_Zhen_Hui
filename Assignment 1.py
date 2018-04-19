@@ -1,3 +1,14 @@
+"""
+Ong Zhen Hui
+This program reads a song list from the CSV, which allows a user to keep track of which song they wish to learn and
+which songs they have completed. Each song contains the "title", "artist", and "year". The user can choose to add
+a song in the list, and which songs to complete.
+The song list is sorted by the artist then by the title.
+Completed songs cannot be changed from learned to required.
+
+"""
+
+
 #listing songs
 def list_song(songlist):
     i = 1
@@ -39,10 +50,10 @@ def add_song(songlist):
     check = 0
     while check == 0:
         try:
-            year = int(input("Year: "))
+            year = int(input("Year (YYYY): "))
             #Error checking, ensure year is not < 0
-            if year <= 0:
-                print("Number must be > 0")
+            if year <= 1500 or year >2018:
+                print("Year must be between 1500 and current year (2018)")
             #if no error, create new song as a list
             else:
                 new_song = [title, artist, year, "y"]
@@ -96,51 +107,53 @@ def complete_song(songlist):
 
 
 
-def main():
-    #importing file
-    import csv
 
-    #storing it into a list so there is no need for repeated reading of file
-    songlist = []
-    num_of_songs = 0
-    with open('songs.csv') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            songlist.append(row)
-            num_of_songs = num_of_songs + 1
-    #sorting list by artist then song name
-    songlist = sorted(songlist, key = lambda element: (element[1], element[0]))
-    print("Welcome Zhen Hui\n{} songs loaded".format(num_of_songs))
+#import file
+import csv
 
-    #Menu of choices for user
-    menu = """Menu:
-    L - List songs
-    A - Add new song
-    C - Complete a song
-    Q - Quit"""
+#store it into a list so there is no need for repeated reading of file
+songlist = []
+num_of_songs = 0
+with open('songs.csv') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        songlist.append(row)
+        num_of_songs = num_of_songs + 1
+#sort list by artist then song name
+songlist = sorted(songlist, key = lambda element: (element[1], element[0]))
+print("Welcome Zhen Hui\n{} songs loaded".format(num_of_songs))
+
+#Print menu
+menu = """Menu:
+L - List songs
+A - Add new song
+C - Complete a song
+Q - Quit"""
+print(menu)
+choice = str(input(">>>")).upper()
+
+#loop for user to continue until quit
+while choice != "Q":
+    #call list function
+    if choice == "L":
+        list_song(songlist)
+
+    #call add song function
+    elif choice == "A":
+        songlist = add_song(songlist)
+
+    #call complete song function
+    elif choice == "C":
+        songlist = complete_song(songlist)
+
+    #Error checking to ensure user do not input choice out of menu
+    else:
+        print("Invalid choice")
     print(menu)
     choice = str(input(">>>")).upper()
 
-    #loop for user to continue until quit
-    while choice != "Q":
-        if choice == "L":
-            list_song(songlist)
-
-        elif choice == "A":
-            songlist = add_song(songlist)
-
-        elif choice == "C":
-            songlist = complete_song(songlist)
-
-        #Error checking to ensure user do not input choice out of menu
-        else:
-            print("Invalid choice")
-        print(menu)
-
-        choice = str(input(">>>")).upper()
-
-    with open('songs.csv', 'w') as file:
-        writer = csv.writer(file, lineterminator='\n')
-        writer.writerows(songlist)
-    print("{} songs saved to songs.csv\nHave a nice day!".format(len(songlist)))
-main()
+#overwrite current csv file
+with open('songs.csv', 'w') as file:
+    writer = csv.writer(file, lineterminator='\n')
+    writer.writerows(songlist)
+print("{} songs saved to songs.csv\nHave a nice day!".format(len(songlist)))

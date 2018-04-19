@@ -9,7 +9,12 @@ Completed songs cannot be changed from learned to required.
 https://github.com/OngZhenHui/CP1404_A1_Ong_Zhen_Hui
 """
 
-
+"""
+def list_song(songlist):
+    count number of learned songs and not learned songs
+    print sorted list of songs
+    print number of learned songs and not learned songs
+"""
 #list songs
 def list_song(songlist):
     i = 1
@@ -32,11 +37,25 @@ def list_song(songlist):
         i = i + 1
     print("\n{} songs learned, {} songs still to learn".format(learned, not_learned))
 
+"""
+def add_song():
+    get title from user
+    error check user input
+    
+    get artist from user
+    error check user input
 
+    get year from user
+    error check user input
+    
+    add new song to the list
+    return new list
+"""
 #create function to add song in list
 def add_song(songlist):
     #get song title from user
     title = input("Title: ").title()
+    import string
     #error check that title is not blank
     while title == "":
         print("Input cannot be blank\nPlease enter a title")
@@ -69,7 +88,16 @@ def add_song(songlist):
             print("Invalid input!\nPlease enter a valid number")
     #add the new song into the song list
 
-
+"""
+def complete_song():
+    count number of learned and unlearned songs
+    if all songs are learned, print "No more songs to learn!"
+    
+    get song number from user
+    if song number is learned, print "you have already learned that song"
+    if song number is unlearned, change song from unlearned to learned
+    update and return songlist
+"""
 #create function for completing songs
 def complete_song(songlist):
     not_learned = 0
@@ -111,7 +139,15 @@ def complete_song(songlist):
             print("Invalid input")
 
 
-
+"""
+open and read csv file
+sort the list by artist then title
+print menu
+get user choice
+error check user input
+call function according to user input
+overwrite csv file when user quits
+"""
 
 #import file
 import csv

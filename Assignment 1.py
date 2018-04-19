@@ -79,10 +79,10 @@ def complete_song(songlist):
         print("Invalid song number")
         number = int(input(">>>")) - 1
 
-    if songlist[number][3] == "y":
+    if songlist[number][3] == "n":
         print("You have already learned {}".format(songlist[number][0]))
     else:
-        songlist[number][3] = "y"
+        songlist[number][3] = "n"
         print("{} by {} learned".format(songlist[number][0], songlist[number][1]))
 
     return songlist

@@ -72,20 +72,28 @@ def complete_song(songlist):
 
     print("Enter the number of a song to mark as learned")
     #the -1 is so that the it'll access the correct list as count starts from 0
-    number = int(input(">>>")) - 1
 
-    #ensure that the number song is not over or below songlist
-    while number < 0 or number > len(songlist) - 1:
-        print("Invalid song number")
-        number = int(input(">>>")) - 1
+    check = 0
+    while check == 0:
+        try:
+            number = int(input(">>>")) - 1
+            #ensure that the number song is not over or below songlist
+            if number < 0 or number > len(songlist) - 1:
+                print("Invalid song number")
 
-    if songlist[number][3] == "n":
-        print("You have already learned {}".format(songlist[number][0]))
-    else:
-        songlist[number][3] = "n"
-        print("{} by {} learned".format(songlist[number][0], songlist[number][1]))
+            elif songlist[number][3] == "n":
+                print("You have already learned {}".format(songlist[number][0]))
+                return songlist
 
-    return sorted(songlist, key = lambda element: (element[1], element[0]))
+            else:
+                songlist[number][3] = "n"
+                print("{} by {} learned".format(songlist[number][0], songlist[number][1]))
+
+                return sorted(songlist, key=lambda element: (element[1], element[0]))
+
+        except ValueError:
+            print("Invalid input")
+
 
 
 def main():

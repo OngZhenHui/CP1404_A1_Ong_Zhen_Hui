@@ -4,8 +4,8 @@ def list_song(songlist):
     not_learned = 0
     learned = 0
 
-    #loop through a sorted list (sorted by artist then title)
-    for row in sorted(songlist, key = lambda element: (element[1], element[0])):
+    #loop through the list
+    for row in songlist:
         #check and count number of songs learned (n) and not learned(y)
         #unlearned songs are marked with "*"
         if row[3] == "n":
@@ -22,7 +22,7 @@ def list_song(songlist):
 
 
 #adding song in list
-def add_song(song_list):
+def add_song(songlist):
     #get song title
     title = input("Title: ").title()
     while title == "":
@@ -47,8 +47,8 @@ def add_song(song_list):
             else:
                 new_song = [title, artist, year, "y"]
                 check = 1
-                song_list.append(new_song)
-                return song_list
+                songlist.append(new_song)
+                return sorted(songlist, key = lambda element: (element[1], element[0]))
 
         except ValueError:
             print("Invalid input!\nPlease enter a valid number")
@@ -68,7 +68,7 @@ def complete_song(songlist):
     #if there are no more unlearned songs, stop the function and return to main()
     if not_learned == 0:
         print("No more songs to learn!")
-        return songlist
+        return sorted(songlist, key = lambda element: (element[1], element[0]))
 
     print("Enter the number of a song to mark as learned")
     #the -1 is so that the it'll access the correct list as count starts from 0
@@ -85,7 +85,7 @@ def complete_song(songlist):
         songlist[number][3] = "n"
         print("{} by {} learned".format(songlist[number][0], songlist[number][1]))
 
-    return songlist
+    return sorted(songlist, key = lambda element: (element[1], element[0]))
 
 
 def main():
@@ -100,7 +100,8 @@ def main():
         for row in reader:
             songlist.append(row)
             num_of_songs = num_of_songs + 1
-
+    #sorting list by artist then song name
+    songlist = sorted(songlist, key = lambda element: (element[1], element[0]))
     print("Welcome Zhen Hui\n{} songs loaded".format(num_of_songs))
 
     #Menu of choices for user

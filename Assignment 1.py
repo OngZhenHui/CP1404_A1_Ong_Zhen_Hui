@@ -81,6 +81,7 @@ def add_song(songlist):
                 new_song = [title, artist, year, "y"]
                 check = 1
                 songlist.append(new_song)
+                print("{} by {} ({}) added to song list".format(title, artist, year))
                 return sorted(songlist, key = lambda element: (element[1], element[0]))
 
         #Error check for value error

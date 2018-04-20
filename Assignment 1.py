@@ -91,11 +91,15 @@ def add_song(songlist):
 """
 def complete_song():
     count number of learned and unlearned songs
-    if all songs are learned, print "No more songs to learn!"
+    if all songs are learned
+        print "No more songs to learn!"
     
     get song number from user
-    if song number is learned, print "you have already learned that song"
-    if song number is unlearned, change song from unlearned to learned
+    error check song numnber is within songlist range
+    if song number is learned
+        print "you have already learned that song"
+    if song number is unlearned
+        change song from unlearned to learned
     update and return songlist
 """
 #create function for completing songs

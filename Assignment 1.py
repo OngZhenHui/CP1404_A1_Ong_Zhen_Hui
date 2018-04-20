@@ -149,8 +149,14 @@ sort the list by artist then title
 print menu
 get user choice
 error check user input
-call function according to user input
-overwrite csv file when user quits
+if user input is "L"
+    call list song function
+if user input is "A"
+    call add song function
+if user input is "C"
+    call complete song function
+if user input is "Q"
+    overwrite csv file and quit quits
 """
 
 #import file
